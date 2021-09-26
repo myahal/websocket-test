@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div style="color: #280861; text-align: center">
+    <h1 class="mat-title">WebSocket with Spring Boot + STOMP + Angular 6</h1>
+    <a class="mat-subheading-2" href="#">Websocket with Spring Boot and Agngular 6 guide</a>
+    <h4 class="mat-h4">Author - Saurabh Oza (Only Fullstack Developer Blog)</h4>
+  </div>
+  <mat-divider [inset]="true" style="margin: 2%"></mat-divider>
+
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" fxLayouyGap="1%">
+    <label>Make Connection</label>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="min-width: 40%">
+      <button mat-raised-button color="primary" type="button" [disabled]="!disabled"
+        (click)="connectToWebsocketWithStomp()">Connect</button>
+      <button mat-raised-button type="submit" [disabled]="disabled"
+        (click)="disconnect()">Disconnect</button>
+    </div>
+  </div>
+
+  <mat-divider [inset]="true" style="margin: 2%"></mat-divider>
+
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" *ngIf="!disabled">
+    <div>
+      <p class="mat-subheading-2">You are connected to the server, now you can send user names.</p>
+    </div>
+    <form [formGroup]="userForm" fxLayout="column" (submit)="submit()">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="User's Name" formControlName="userName">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Send</button>
+    </form>
+    <div fxLayout="column" fxLayoutGap="1%">
+      <mat-card *ngFor="let greeting of greetings" style="min-width: 30%">
+        {{greeting}}
+      </mat-card>
+    </div>
+  </div>
+</body>
+
+</html>

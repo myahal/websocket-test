@@ -1,14 +1,10 @@
 package com.example.webSocketServer.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Message {
-    private String name;
-    private String statement;
-
-    public Message(String name, String statement) {
-        this.name = name;
-        this.statement = statement;
-    }
+    private String greeting;
 }
