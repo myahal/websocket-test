@@ -20,15 +20,9 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder) { }
 
-  // ngOnInit(): void {
-  //   this.userForm = this.formBuilder.group({
-  //     userName: ['', Validators.required]
-  //   });
-  // }
-
   connectToWebsocketWithStomp() {
     console.log('call connect to server')
-    const socket = new SockJS('http://localhost:8080/onlyfullstack-stomp-endpoint');
+    const socket = new SockJS('http://localhost:8080/endpoint');
     this.stompClient = Stomp.over(socket)
 
     const _this = this;
@@ -37,6 +31,12 @@ export class AppComponent {
       console.log('Connected: ' + frame);
 
       _this.stompClient!.subscribe('/topic/hi', function(hello) {
+        console.log('get message')
+        _this.showGreeting(JSON.parse(hello.body).greeting);
+      });
+
+      _this.stompClient!.subscribe('/queue/notice', function(hello) {
+        console.log('get queue message')
         _this.showGreeting(JSON.parse(hello.body).greeting);
       });
     });
@@ -55,7 +55,7 @@ export class AppComponent {
 
   submit() {
     this.stompClient!.send(
-      '/onlyfullstack/hello',
+      '/app/hello',
       {},
       JSON.stringify({ name: this.userForm.value.userName })
     );
